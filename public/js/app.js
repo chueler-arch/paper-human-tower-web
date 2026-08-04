@@ -280,7 +280,7 @@
 
   function boundedNumber(value, min, max, fallback) { const number = Number(value); return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallback; }
   function applySettingsToApp() {
-    document.title = 'ペーパーヒューマンタワー';
+    document.title = window.i18n?.language === 'en' ? 'Paper Human Tower' : 'ペーパーヒューマンタワー';
     $('#preStartMessage').innerHTML = sanitizeDisplayHtml(state.settings.preStartText);
     $('#challengeDurationTitle').textContent = `${state.settings.buildMinutes}分間の`;
     $('#presentationDurationTitle').textContent = `${state.settings.presentationSeconds}秒で、`;
