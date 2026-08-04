@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff8ec">
+  <meta name="description" content="ペーパーヒューマンタワーのチーム分け、タイマー、計測、振り返りを一つにまとめた進行アプリ">
+  <title>ペーパーヒューマンタワー</title>
+  <link rel="icon" href="images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+JP:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="最初の画面へ">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>Paper Human<br><b>Tower</b></span>
+      </a>
+      <div class="progress-wrap" aria-label="進行状況">
+        <span id="sectionLabel">START</span>
+        <div class="progress"><i id="progressBar"></i></div>
+        <span id="slideCount">01 / 13</span>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="soundBtn" type="button" aria-label="効果音を切り替える" title="効果音"><span>♪</span></button>
+        <button class="icon-btn" id="fullscreenBtn" type="button" aria-label="全画面表示" title="全画面表示"><span>⛶</span></button>
+      </div>
+    </header>
+
+    <main id="stage" tabindex="-1" aria-live="polite">
+      <section class="slide prestart-slide" data-title="READY" data-optional="prestart">
+        <div id="preStartMessage">みなさんにチャレンジ頂くのは・・・</div>
+      </section>
+      <section class="slide hero is-active" data-title="START">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> TEAM BUILDING WORKSHOP</p>
+          <h1>ペーパーヒューマン<br><em>タワー</em></h1>
+          <p class="lead">A4用紙30枚とヒューマンだけ。<br>知恵と協力で、いちばん高い自立式タワーをつくろう。</p>
+          <button class="hero-setup-btn" id="setupBtn" type="button"><span>⚙</span> 事前準備をする</button>
+          <button class="primary-btn" type="button" data-next>チャレンジをはじめる <span>→</span></button>
+        </div>
+      </section>
+
+      <section class="slide center-slide" data-title="INTRO">
+        <div class="mini-human" aria-hidden="true">人</div>
+        <p class="eyebrow centered"><span></span> FIRST THINGS FIRST <span></span></p>
+        <h2>この時間だけは、<br><em>画面を閉じよう。</em></h2>
+        <p class="big-note">ここから終了まで、PC・スマートフォンは使用しません。</p>
+        <div class="ban-row"><div>PC</div><b>×</b><div>PHONE</div><b>×</b><div>SEARCH</div></div>
+      </section>
+
+      <section class="slide" data-title="TEAM MAKING">
+        <div class="slide-heading">
+          <div><p class="eyebrow"><span></span> TEAM ASSIGNMENT</p><h2>チーム<em>分け</em></h2></div>
+          <p class="move-instruction">自分の名前を確認して、<br><strong>チームの机に移動してください。</strong></p>
+        </div>
+        <div class="team-workspace">
+          <div class="participant-panel">
+            <label for="participantInput">参加者 <small id="participantCount">12名</small></label>
+            <textarea id="participantInput" rows="8" spellcheck="false"></textarea>
+            <label class="main-team-count" for="mainTeamCount">チーム数<input id="mainTeamCount" type="number" min="1" max="20" value="1"></label>
+            <button class="shuffle-btn" id="shuffleBtn" type="button"><span>↻</span> ランダムにチーム分け</button>
+          </div>
+          <div class="teams" id="teams" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="ROLES">
+        <div class="split-layout">
+          <div><p class="eyebrow"><span></span> TEAM ROLES</p><h2>自己紹介と<br><em>役割分担。</em></h2><div class="questions"><p><span>01</span>設計担当：構造アイデアと全体設計</p><p><span>02</span>組み立て担当：タワーを積み上げる</p><p><span>03</span>サポート担当：紙の加工と土台づくり</p></div></div>
+          <div class="timer-card" data-seconds="120">
+            <p>ROLE ASSIGNMENT</p><div class="timer-dial"><svg viewBox="0 0 120 120"><circle class="dial-bg" cx="60" cy="60" r="54"/><circle class="dial-progress" cx="60" cy="60" r="54"/></svg><strong class="timer-display">02:00</strong></div>
+            <div class="timer-actions"><button type="button" data-timer-action="reset">↺</button><button class="timer-main" type="button" data-timer-action="toggle">スタート</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="CHECKLIST">
+        <div class="slide-heading"><div><p class="eyebrow"><span></span> CHECKLIST</p><h2>備品を<br><em>確認しよう。</em></h2></div><p>すべて揃っているか、チームごとにチェックしてください。</p></div>
+        <div class="supply-grid" id="supplyGrid">
+          <button type="button"><span>01</span><b>A4用紙</b><strong>30<small>枚</small></strong><i>✓</i></button>
+          <button type="button"><span>02</span><b>作戦用A4用紙</b><strong>1<small>枚</small></strong><i>✓</i></button>
+          <button type="button"><span>03</span><b>ヒューマン</b><strong>1<small>体</small></strong><i>✓</i></button>
+          <button type="button"><span>04</span><b>計測用メジャー</b><strong>1<small>本</small></strong><i>✓</i></button>
+        </div>
+      </section>
+
+      <section class="slide rule-detail" data-title="RULE 01"><div class="rule-detail-copy"><p class="eyebrow"><span></span> RULE 01 / 04</p><h2>使える材料は、<br><em>紙だけ。</em></h2><p>A4用紙30枚と指定のヒューマンを使います。のり・テープなどの固定道具は禁止です。</p></div><div class="paper-rule-art" aria-hidden="true">A4 × 30</div></section>
+      <section class="slide rule-detail" data-title="RULE 02"><div class="rule-detail-copy"><p class="eyebrow"><span></span> RULE 02 / 04</p><h2>紙の加工は、<br><em>自由。</em></h2><p>折る、切る、丸める、差し込む。紙をどう加工しても構いません。</p></div><div class="paper-rule-art" aria-hidden="true">折る・切る・丸める</div></section>
+      <section class="slide rule-detail" data-title="RULE 03"><div class="rule-detail-copy"><p class="eyebrow"><span></span> RULE 03 / 04</p><h2>ヒューマンを、<br><em>組み込む。</em></h2><p>人形をタワーのどこかに落ちないよう設置します。最上部でなくても構いません。</p></div><div class="paper-rule-art human-art" aria-hidden="true">人</div></section>
+      <section class="slide rule-detail rule-detail--warning" data-title="RULE 04"><div class="rule-detail-copy"><p class="eyebrow"><span></span> RULE 04 / 04</p><h2>手を離して、<br><em>10秒自立。</em></h2><p>10秒間倒れずに立ったタワーだけ、最高地点を計測します。</p></div><div class="paper-rule-art" aria-hidden="true">10 SEC</div></section>
+
+      <section class="slide challenge-slide" data-title="PLAN">
+        <div class="challenge-copy"><p class="eyebrow light"><span></span> STRATEGY TIME</p><h2>まずは1枚で、<br><em>作戦会議。</em></h2><p>使用できる紙は1枚だけ。構造と手順を試し、全員で戦略を決めてください。</p></div>
+        <div class="timer-card timer-card--dark" data-seconds="300"><p>STRATEGY TIME</p><div class="timer-dial"><svg viewBox="0 0 120 120"><circle class="dial-bg" cx="60" cy="60" r="54"/><circle class="dial-progress" cx="60" cy="60" r="54"/></svg><strong class="timer-display">05:00</strong></div><div class="timer-actions"><button type="button" data-timer-action="reset">↺</button><button class="timer-main" type="button" data-timer-action="toggle">スタート</button></div></div>
+      </section>
+
+      <section class="slide challenge-slide" data-title="BUILD">
+        <div class="challenge-copy"><p class="eyebrow light"><span></span> READY TO BUILD?</p><h2><span id="challengeDurationTitle">15分間の</span><br><em>真剣勝負。</em></h2><p>30枚の紙をフルに活用して、安全に高く積み上げよう！</p><p class="rule-alert">ルール厳守！</p><ol class="build-rule-summary"><li><span>01</span>使えるのはA4用紙30枚とヒューマン</li><li><span>02</span>紙の加工は自由</li><li><span>03</span>のり・テープなどの固定道具は禁止</li><li><span>04</span>ヒューマンをタワーに組み込む</li><li><span>05</span>終了後は手を離す</li><li><span>06</span>10秒自立で記録認定</li></ol></div>
+        <div class="timer-card timer-card--dark" data-seconds="900">
+          <p>TIME REMAINING</p><div class="timer-dial"><svg viewBox="0 0 120 120"><circle class="dial-bg" cx="60" cy="60" r="54"/><circle class="dial-progress" cx="60" cy="60" r="54"/></svg><strong class="timer-display">15:00</strong></div>
+          <div class="timer-actions"><button type="button" data-timer-action="reset">↺</button><button class="timer-main" type="button" data-timer-action="toggle">スタート</button></div>
+        </div>
+      </section>
+
+      <section class="slide center-slide hold-slide" data-title="10 SECOND TEST">
+        <p class="eyebrow centered"><span></span> HANDS OFF <span></span></p><h2>終了！<br><em>手を離してください。</em></h2><p class="big-note">10秒間、自立できれば記録認定です。</p>
+        <div class="timer-card" data-seconds="10"><p>STABILITY TEST</p><div class="timer-dial"><svg viewBox="0 0 120 120"><circle class="dial-bg" cx="60" cy="60" r="54"/><circle class="dial-progress" cx="60" cy="60" r="54"/></svg><strong class="timer-display">00:10</strong></div><div class="timer-actions"><button type="button" data-timer-action="reset">↺</button><button class="timer-main" type="button" data-timer-action="toggle">判定開始</button></div></div>
+      </section>
+
+      <section class="slide" data-title="MEASURE">
+        <div class="slide-heading"><div><p class="eyebrow"><span></span> MEASUREMENT</p><h2>高さを<br><em>計測しよう。</em></h2></div><p>10秒間自立したタワーの、床面から最高地点までの高さを入力してください。</p></div>
+        <div class="measure-grid" id="measureGrid"></div>
+        <button class="primary-btn results-btn" type="button" data-next>順位を見る <span>→</span></button>
+      </section>
+
+      <section class="slide results-slide" data-title="RESULTS">
+        <div class="confetti" aria-hidden="true"></div>
+        <p class="eyebrow centered"><span></span> FINAL RESULTS <span></span></p>
+        <h2><span id="winnerName">A TEAM</span><br><em>おめでとう！</em></h2>
+        <div class="podium" id="podium"></div>
+      </section>
+
+      <section class="slide" data-title="REFLECTION">
+        <div class="split-layout reflection-layout">
+          <div><p class="eyebrow"><span></span> REFLECTION</p><h2>つくった後が、<br><em>いちばん大事。</em></h2><p class="reflection-intro">チームで振り返り、気づいたことを発表しましょう。</p><div class="questions"><p><span>01</span>なぜ、この順位・高さになった？</p><p><span>02</span>どうすれば1位になれた？</p><p><span>03</span>次の挑戦で変えることは？</p></div></div>
+          <div class="timer-card" data-seconds="180">
+            <p>TEAM TALK</p><div class="timer-dial"><svg viewBox="0 0 120 120"><circle class="dial-bg" cx="60" cy="60" r="54"/><circle class="dial-progress" cx="60" cy="60" r="54"/></svg><strong class="timer-display">03:00</strong></div>
+            <div class="timer-actions"><button type="button" data-timer-action="reset">↺</button><button class="timer-main" type="button" data-timer-action="toggle">スタート</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="PRESENTATION">
+        <div class="presentation-head"><div><p class="eyebrow"><span></span> PRESENTATION</p><h2><span id="presentationDurationTitle">30秒で、</span><em>発表。</em></h2></div><div class="team-tabs" id="teamTabs"></div></div>
+        <div class="presentation-body"><div><span id="presentingBadge">TEAM A</span><h3 id="presentingTeam">Aチームの発表</h3><p>気づいたこと、工夫したこと、次に変えたいことを共有してください。</p></div>
+          <div class="timer-card compact" data-seconds="30"><p>PRESENTATION TIME</p><div class="timer-dial"><svg viewBox="0 0 120 120"><circle class="dial-bg" cx="60" cy="60" r="54"/><circle class="dial-progress" cx="60" cy="60" r="54"/></svg><strong class="timer-display">00:30</strong></div><div class="timer-actions"><button type="button" data-timer-action="reset">↺</button><button class="timer-main" type="button" data-timer-action="toggle">スタート</button></div></div>
+        </div>
+      </section>
+
+      <section class="slide prize-slide" data-title="PRIZE">
+        <div class="prize-art" aria-hidden="true"><div class="gift"><i></i></div><span class="spark sp1">✦</span><span class="spark sp2">✦</span><span class="spark sp3">●</span></div>
+        <div><p class="eyebrow"><span></span> AWARD TIME</p><h2 id="prizeTitle">健闘をたたえて、<br><em>優勝チームに拍手！</em></h2><ol id="prizeList"></ol></div>
+      </section>
+
+      <section class="slide end-slide" data-title="FINISH">
+        <div class="end-art end-human" aria-hidden="true">人<span>✦</span></div>
+        <p class="eyebrow centered"><span></span> GREAT WORK <span></span></p>
+        <h2>おつかれさまでした！</h2>
+        <p>小さくつくって、試して、学ぶ。<br>今日の発見を、次のチャレンジへ。</p>
+        <button class="secondary-btn" id="restartBtn" data-restart type="button">最初に戻る ↺</button>
+      </section>
+    </main>
+
+    <footer class="nav-bar">
+      <div class="footer-info"><nav aria-label="サイト情報"><a href="how-to-play.html">遊び方・ヘルプ</a><a href="about.html">このアプリについて</a><a href="terms.html">利用規約</a><a href="privacy.html">プライバシーポリシー</a><a href="https://sona-studio-portal.pages.dev/" target="_blank" rel="noopener">SONA STUDIO</a></nav><small>© SONA STUDIO</small></div>
+      <div><button id="prevBtn" type="button" aria-label="前へ">←</button><button id="nextBtn" type="button" aria-label="次へ">次へ <span>→</span></button></div>
+    </footer>
+  </div>
+  <aside class="setup-overlay" id="setupOverlay" aria-hidden="true">
+    <div class="setup-panel" role="dialog" aria-modal="true" aria-labelledby="setupTitle">
+      <header class="setup-header">
+        <div><p>BEFORE THE WORKSHOP</p><h2 id="setupTitle">事前準備</h2></div>
+        <button class="setup-close" id="setupCloseBtn" type="button" aria-label="事前準備を閉じる">×</button>
+      </header>
+      <div class="setup-body">
+        <nav class="setup-nav" aria-label="事前準備メニュー">
+          <button class="is-active" type="button" data-setup-page="0"><span>01</span>ゲームの目的</button>
+          <button type="button" data-setup-page="1"><span>02</span>ルールと進行</button>
+          <button type="button" data-setup-page="2"><span>03</span>運営メンバー</button>
+          <button type="button" data-setup-page="3"><span>04</span>会場の準備</button>
+          <button type="button" data-setup-page="4"><span>05</span>配布物準備</button>
+          <button type="button" data-setup-page="5"><span>06</span>運営からのお願い</button>
+          <button type="button" data-setup-page="6"><span>07</span>チーム・参加者</button>
+          <button type="button" data-setup-page="7"><span>08</span>ゲームの設定</button>
+        </nav>
+        <div class="setup-content">
+          <section class="setup-page is-active" data-setup-panel="0">
+            <p class="setup-kicker">01 / PURPOSE</p><h3>ゲームの目的</h3>
+            <p class="setup-lead">限られた材料と時間の中で、チームで試行錯誤しながら、できるだけ高い自立式タワーをつくります。</p>
+            <div class="purpose-grid"><article><b>協働</b><p>役割を決め、アイデアを共有しながら一つの成果をつくる。</p></article><article><b>試行錯誤</b><p>小さく試し、失敗から学び、制限時間内に改善する。</p></article><article><b>振り返り</b><p>結果だけでなく、チームの進め方と意思決定から学ぶ。</p></article></div>
+          </section>
+          <section class="setup-page" data-setup-panel="1">
+            <p class="setup-kicker">02 / RULES & FLOW</p><h3>ルール説明と進行方法</h3>
+            <div class="flow-list"><article><span>01</span><div><b>導入・チーム分け</b><p>目的を伝え、登録したチームで活動を始めます。</p></div></article><article><span>02</span><div><b>役割分担・備品確認</b><p>自己紹介後、設計・組み立て・サポートの役割を決めます。</p></div></article><article><span>03</span><div><b>ルール・作戦会議</b><p>4つのルールを確認し、1枚の紙で5分間作戦を練ります。</p></div></article><article><span>04</span><div><b>制作・自立判定</b><p>15分間制作し、手を離して10秒間の自立を確認します。</p></div></article><article><span>05</span><div><b>計測・振り返り・発表</b><p>高さを記録し、チームで振り返った後に発表します。</p></div></article></div>
+          </section>
+          <section class="setup-page" data-setup-panel="2">
+            <p class="setup-kicker">03 / STAFF</p><h3>運営メンバー</h3><div class="prep-slide-list"><article><span>01</span><div><b>進行役</b><p>画面を操作しながら、ルール説明とゲーム全体の進行を担当します。</p></div></article><article><span>02</span><div><b>メジャー担当</b><p>各チームのペーパータワーの高さを計ります。</p></div></article><article><span>03</span><div><b>撮影係</b><p>記録を残しておくことで、ゲーム後の振り返りに使います。</p></div></article></div>
+          </section>
+          <section class="setup-page" data-setup-panel="3"><p class="setup-kicker">04 / VENUE</p><h3>会場の準備</h3><div class="prep-slide-list"><article class="wide-prep"><span>01</span><div><b>各机のチーム名表示</b><p>チーム名が分かるよう各机に表示してください。チームごとに独立した机をできるだけ用意してください。複数チームで同じ机をシェアすると、揺らしたなどの問題が起こります。</p></div></article><article><span>02</span><div><b>メジャー</b></div></article><article><span>03</span><div><b>脚立</b></div></article><article><span>04</span><div><b>撮影用カメラ</b></div></article><article><span>05</span><div><b>大型モニタ または プロジェクター</b><p>参加者全員がこのアプリを見られる位置に設置します。</p></div></article></div></section>
+          <section class="setup-page" data-setup-panel="4"><p class="setup-kicker">05 / TEAM KITS</p><h3>各チームへの配布物準備</h3><p class="setup-lead kit-lead">チームごとに下記を用意してください。</p><div class="distribution-grid"><article><b>A4用紙</b><strong>30枚</strong></article><article><b>作戦用A4用紙</b><strong>1枚</strong></article><article><b>ヒューマン</b><strong>1体</strong></article><article><b>計測用メジャー</b><strong>1本</strong></article></div><p class="envelope-note large-note">のり・テープなどの固定道具は配布しません。ヒューマンは事前にチーム分を準備してください。</p></section>
+          <section class="setup-page" data-setup-panel="5"><p class="setup-kicker">06 / A REQUEST FROM US</p><h3>運営からのお願い</h3><div class="request-cards"><article><span>¥</span><div><b>任意のご支援について</b><p>このアプリが役に立ちましたら、少額でも運営・改善費をご支援いただけるとうれしいです。ご支援は完全に任意で、利用条件ではありません。</p><p><a href="mailto:chueler@gmail.com?subject=ペーパーヒューマンタワー支援について">SONA STUDIOへメール</a>でご連絡ください。</p></div></article><article><span>◎</span><div><b>活用事例をお寄せください</b><p>ご活用いただいた企業名・団体名と、実施時の写真（公開可能なもの）をぜひお送りください。</p><p><a href="mailto:chueler@gmail.com?subject=ペーパーヒューマンタワー活用事例">活用事例をメールで送る</a></p></div></article></div></section>
+          <section class="setup-page" data-setup-panel="6">
+            <p class="setup-kicker">04 / TEAMS & MEMBERS</p><h3>チームと参加者の登録</h3>
+            <p class="team-guidance">1チーム3～5名を基本としてください。</p>
+            <div class="team-registration-head"><span>チーム名</span><span>参加者（1行に1名）</span></div>
+            <div class="team-registration" id="teamRegistration"></div>
+            <div class="setup-inline-actions"><button class="add-team-btn" id="addTeamBtn" type="button">＋ チームを追加する</button><button class="setup-primary" id="setupShuffleBtn" type="button">全参加者を再振り分け</button><span id="setupParticipantCount">0名</span></div>
+            <div class="config-box"><div><b>チーム・参加者ファイル</b><p>設定はブラウザに自動保存されます。CSVにはゲーム設定、チーム名、各チームの参加者が保存されます。</p></div><div><button class="export-config-btn" type="button">↓ CSVダウンロード</button><button class="import-config-btn" type="button">↑ CSVインポート</button></div></div>
+          </section>
+          <section class="setup-page" data-setup-panel="7">
+            <p class="setup-kicker">05 / GAME SETTINGS</p><h3>ゲームの設定</h3>
+            <div class="settings-grid">
+              <label>役割分担<input id="settingPresenter" type="number" min="5" max="600"><span>秒</span></label>
+              <label>制作時間<input id="settingBuild" type="number" min="1" max="120"><span>分</span></label>
+              <label>振り返り<input id="settingReflection" type="number" min="1" max="60"><span>分</span></label>
+              <label>チーム発表<input id="settingPresentation" type="number" min="5" max="600"><span>秒</span></label>
+              <label class="toggle-label">効果音を初期状態でON<input id="settingSound" type="checkbox"><i></i></label>
+              <label class="toggle-label">開始前画面を表示<input id="settingPreStart" type="checkbox"><i></i></label>
+              <label class="wide-setting">開始前画面の文字 <small>改行・HTMLタグ使用可</small><textarea id="settingPreStartText" rows="4" maxlength="1000" placeholder="みなさんにチャレンジ頂くのは・・・"></textarea></label>
+              <label>1位の景品<input id="settingPrize1" type="text" maxlength="60" placeholder="未入力"></label>
+              <label>2位の景品<input id="settingPrize2" type="text" maxlength="60" placeholder="未入力"></label>
+              <label>3位の景品<input id="settingPrize3" type="text" maxlength="60" placeholder="未入力"></label>
+            </div>
+            <div class="config-box"><div><b>設定ファイル</b><p>設定はブラウザに自動保存されます。CSVには時間、効果音、開始前画面、景品、チーム名、参加者が保存されます。</p></div><div><button class="export-config-btn" type="button">↓ CSVダウンロード</button><button class="import-config-btn" type="button">↑ CSVインポート</button></div></div>
+          </section>
+        </div>
+      </div>
+      <footer class="setup-footer"><p>変更内容はこのブラウザに自動保存されます</p><div><button id="setupPrevBtn" type="button">← 戻る</button><button class="setup-primary" id="setupNextBtn" type="button">次へ →</button><button class="setup-primary setup-done" id="setupDoneBtn" type="button">準備完了</button></div></footer>
+      <input id="importConfigInput" type="file" accept="text/csv,.csv" hidden>
+    </div>
+  </aside>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="timeup-overlay" id="timeupOverlay" role="alertdialog" aria-modal="true" aria-labelledby="timeupTitle" hidden>
+    <div class="timeup-dialog"><p>TIME'S UP</p><h2 id="timeupTitle">タイムアップ！</h2><span>作業を止めて、画面を確認してください。</span><button type="button" id="timeupCloseBtn">確認して閉じる</button></div>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>
