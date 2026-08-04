@@ -148,7 +148,7 @@
       while (walker.nextNode()) walker.currentNode.nodeType === Node.TEXT_NODE ? translateText(walker.currentNode) : translateElement(walker.currentNode);
     }
     document.documentElement.lang = language;
-    document.title = language === 'en' ? 'Paper Human Tower' : 'ペーパーヒューマンタワー';
+    document.title = language === 'en' ? 'Paper Human Tower | Team-Building Workshop App' : 'ペーパーヒューマンタワー｜チームビルディング研修・ワークショップ進行アプリ';
     document.querySelectorAll('[data-lang]').forEach(button => button.classList.toggle('is-active', button.dataset.lang === language));
   }
   window.i18n = { get language(){ return language; }, t: value => language === 'en' ? dynamic(value) : value, apply, setLanguage(value){ language = value === 'en' ? 'en' : 'ja'; localStorage.setItem('paperHumanTowerLanguage', language); apply(); document.dispatchEvent(new CustomEvent('languagechange', {detail:{language}})); } };
