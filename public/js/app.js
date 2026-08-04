@@ -96,6 +96,13 @@
       state.scores[Number(input.dataset.score)] = Math.max(0, Number(input.value) || 0);
       saveState(); renderResults();
     }));
+    $$('.measure-card').forEach(card => {
+      card.tabIndex = 0;
+      card.setAttribute('role', 'group');
+      const focusInput = () => { const input = $('[data-score]', card); input.focus(); input.select(); };
+      card.addEventListener('click', event => { if (event.target.tagName !== 'INPUT') focusInput(); });
+      card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); focusInput(); } });
+    });
   }
 
   function renderResults() {
