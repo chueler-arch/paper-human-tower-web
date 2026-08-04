@@ -256,8 +256,9 @@
   function formatScore(value) { return Number.isInteger(value) ? String(value) : value.toFixed(1); }
   function escapeHtml(value) { return String(value).replace(/[&<>'"]/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' })[char]); }
 
-  function openSetup(page = 0) { syncSetupFields(); showSetupPage(page); $('#setupOverlay').classList.add('is-open'); $('#setupOverlay').setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
-  function closeSetup() { saveSetupFields(); $('#setupOverlay').classList.remove('is-open'); $('#setupOverlay').setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; $('#setupBtn').focus(); }
+  function hidePurposeExample() { const example = $('#purposeExample'); const button = $('#purposeExampleToggle'); if (!example || !button) return; example.hidden = true; button.setAttribute('aria-expanded', 'false'); button.textContent = 'サンプル画像を表示する'; }
+  function openSetup(page = 0) { hidePurposeExample(); syncSetupFields(); showSetupPage(page); $('#setupOverlay').classList.add('is-open'); $('#setupOverlay').setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+  function closeSetup() { hidePurposeExample(); saveSetupFields(); $('#setupOverlay').classList.remove('is-open'); $('#setupOverlay').setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; $('#setupBtn').focus(); }
   function showSetupPage(page) {
     setupPage = Math.max(0, Math.min(7, page));
     $$('[data-setup-page]').forEach((button, index) => button.classList.toggle('is-active', index === setupPage));
@@ -466,6 +467,7 @@
   $('.brand').addEventListener('click', event => { event.preventDefault(); restartExperience(); });
   $('#soundBtn').addEventListener('click', () => { soundEnabled = !soundEnabled; state.settings.sound = soundEnabled; saveState(); $('#soundBtn').classList.toggle('is-muted', !soundEnabled); showToast(soundEnabled ? '効果音 ON' : '効果音 OFF'); });
   $('#setupBtn').addEventListener('click', () => openSetup()); $('#setupCloseBtn').addEventListener('click', closeSetup); $('#setupDoneBtn').addEventListener('click', () => { closeSetup(); showToast('事前準備を保存しました'); });
+  $('#purposeExampleToggle').addEventListener('click', () => { const example = $('#purposeExample'); const button = $('#purposeExampleToggle'); const show = example.hidden; example.hidden = !show; button.setAttribute('aria-expanded', String(show)); button.textContent = show ? 'サンプル画像を非表示にする' : 'サンプル画像を表示する'; });
   $('#setupPrevBtn').addEventListener('click', () => showSetupPage(setupPage - 1)); $('#setupNextBtn').addEventListener('click', () => showSetupPage(setupPage + 1));
   $$('[data-setup-page]').forEach(button => button.addEventListener('click', () => showSetupPage(Number(button.dataset.setupPage))));
   $('#teamRegistration').addEventListener('input', () => { saveTeamRegistration(); $('#setupParticipantCount').textContent = `${allNames().length}名・${state.teams.length}チーム`; });

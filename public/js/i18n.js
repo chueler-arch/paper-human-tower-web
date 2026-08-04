@@ -55,7 +55,7 @@
     '協働': 'Collaboration', '役割を決め、アイデアを共有しながら一つの成果をつくる。': 'Choose roles, share ideas, and create one result together.',
     '試行錯誤': 'Experimentation', '小さく試し、失敗から学び、制限時間内に改善する。': 'Test small, learn from failure, and improve within the time limit.',
     '振り返り': 'Reflection', '結果だけでなく、チームの進め方と意思決定から学ぶ。': 'Learn not only from the result, but from the team’s process and decisions.',
-    'タワー例です。参加者には見せないでください。': 'Example tower — do not show this to participants.',
+    'タワー例です。参加者には見せないでください。': 'Example tower — do not show this to participants.', 'サンプル画像を表示する': 'Show example image', 'サンプル画像を非表示にする': 'Hide example image',
     'ルール説明と進行方法': 'Rules and facilitation flow', '導入・チーム分け': 'Introduction & team assignment',
     '目的を伝え、登録したチームで活動を始めます。': 'Explain the objective and begin with the registered teams.',
     '役割分担・備品確認': 'Roles & materials check', '自己紹介後、設計・組み立て・サポートの役割を決めます。': 'After introductions, assign design, building, and support roles.',
@@ -111,6 +111,7 @@
     if ((m=value.match(/^(\d+)分間の$/))) return `${m[1]} minutes of `;
     if ((m=value.match(/^(\d+)秒で、$/))) return `In ${m[1]} seconds, `;
     if ((m=value.match(/^(.+)の発表$/))) return `${m[1]} presentation`;
+    if ((m=value.match(/^(.+)に拍手！$/))) return `Applause for ${m[1]}!`;
     if ((m=value.match(/^(\d+)位 (.+)$/))) return `${m[1]}. ${m[2]}`;
     if ((m=value.match(/^チーム(\d+)$/))) return `Team ${m[1]}`;
     if ((m=value.match(/^(\d+)チームに変更しました$/))) return `Changed to ${m[1]} teams.`;
