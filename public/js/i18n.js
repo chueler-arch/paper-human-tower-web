@@ -76,7 +76,7 @@
     '左端と右端のヒューマンの手をテープで留め、輪の状態にする。': 'Tape the hands at the left and right ends together to form a ring.',
     '運営からのお願い': 'A request from us', '任意のご支援について': 'Optional support',
     'このアプリが役に立ちましたら、少額でも運営・改善費をご支援いただけるとうれしいです。ご支援は完全に任意で、利用条件ではありません。': 'If this app was useful, we welcome optional contributions toward operation and improvements. Support is entirely optional and is not a condition of use.',
-    'SONA STUDIOへメール': 'Email SONA STUDIO', 'でご連絡ください。': ' to contact us.', '活用事例をお寄せください': 'Share your story',
+    'SONA CRAFTへメール': 'Email SONA CRAFT', 'でご連絡ください。': ' to contact us.', '活用事例をお寄せください': 'Share your story',
     'ご活用いただいた企業名・団体名と、実施時の写真（公開可能なもの）をぜひお送りください。': 'Please send the name of your organization and any photos you have permission to share.',
     '活用事例をメールで送る': 'Email your story', 'チームと参加者の登録': 'Register teams and participants',
     '1チーム3～5名を基本としてください。': 'We recommend 3–5 people per team.', 'チーム名': 'Team name', '参加者（1行に1名）': 'Participants (one per line)',
